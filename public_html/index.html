@@ -1,0 +1,803 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Veggie Harvest</title>
+		<link type="text/css" href="css/jquery-ui-1.8.13.custom.css" rel="stylesheet" />	
+		<script type="text/javascript" src="http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject.js"></script>
+		<script type="text/javascript" src="jquery-1.6.1.min.js"></script>		
+		<script type="text/javascript" src="jquery-ui-1.8.13.custom.min.js"></script>			
+		<script type="text/javascript">
+		<!--
+		function GetUnity() {
+			if (typeof unityObject != "undefined") {
+				return unityObject.getObjectById("unityPlayer");
+			}
+			return null;
+		}
+		if (typeof unityObject != "undefined") {
+			var params = {
+				disableContextMenu: true
+			};
+			unityObject.embedUnity("unityPlayer", "Webplayer/WebPlayer/WebPlayer.unity3d", 854, 480, params);
+			
+		}
+		-->
+		</script>
+		<script>
+		$(function() {
+			$( "#accordion" ).accordion({ 
+				header: "h3",
+				autoHeight: false,
+				navigation: true
+			});
+		});
+		</script>
+		<style type="text/css">
+		<!--
+		body {
+			font-family: Helvetica, Verdana, Arial, sans-serif;
+			background-color: white;
+			color: black;
+			text-align: center;
+		}
+		a:link, a:visited {
+			color: #000;
+		}
+		a:active, a:hover {
+			color: #666;
+		}
+		p.header {
+			font-size: small;
+		}
+		p.header span {
+			font-weight: bold;
+		}
+		p.footer {
+			font-size: x-small;
+		}
+		div.content {
+			margin: auto;
+			width: 854px;
+		}
+		div.missing {
+			margin: auto;
+			position: relative;
+			top: 50%;
+			width: 193px;
+		}
+		div.missing a {
+			height: 63px;
+			position: relative;
+			top: -31px;
+		}
+		div.missing img {
+			border-width: 0px;
+		}
+		div#unityPlayer {
+			cursor: default;
+			height: 480px;
+			width: 854px;
+		}
+		-->
+		</style>
+	</head>
+	<body>
+		
+		<div class="content">
+			<div id="unityPlayer">
+				<div class="missing">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+					</a>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="content" align="center">
+			<small>&copy;2011 Joseph Blair, Todd Dobbs, Eric Faust, Christine Talbot, <a href="http://cs.uncc.edu">UNC Charlotte</a>.</small>
+		</div>
+		<br>
+		<center>
+		<div id="accordion" style="text-align:left;font-size: small;width: 854px;">
+			<h3><a href="#">Veggie Harvest</a></h3>
+			<div>
+				<strong>Grow your own garden!</strong>
+			</div>
+			<h3><a href="#">Instructions</a></h3>
+			<div>
+				<strong>Goal :</strong> To grow the most Veggies on the board before the board is full.<br>
+				<br>
+				<table summary="Moves" border="1">
+					<tr>
+						<td width="200px"> 
+							<img alt="Veggie Chips" src="images/allveggiechips.png" height=150px width=175px>
+						</td>
+						<td>
+							You are given Veggies to grow within the shared garden: <br><br>
+							Beets, Blueberries, Broccoli, Cabbage, <br>
+							Carrots, Cucumbers, Potatoes, <br>
+							Pumpkins, Tomatoes, Watermelons
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Disaster Chips" src="images/alldestroychips.png" height=150px width=175px>
+						</td>
+						<td>
+							Destroy chips are given to simulate natural disasters: <br><br>
+							You can use them to destroy your own plants or the AI player's plants. They will destroy up to that many of whatever Veggie you use it on.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Board" src="images/Board.png" height=150px width=175px>
+						</td>
+						<td>
+							The shared garden consists of a 3-by-6 grid of different soils. <br><br>
+							Each Veggie will grow best if planted in the right soil in the garden. Some will prefer sand, others topsoil, clay, or volcanic soil.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Choices" src="images/choices.PNG" height=150px width=175px>
+						</td>
+						<td>
+							You will be given choices to grow or destroy Veggies in the shared garden. <br>
+							These chips can be played as quickly as you wish.<br><br>
+							Choose wisely as you can only have up to three actions at a time!
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Selected Chips" src="images/selectedchips.png" height=150px width=175px>
+						</td>
+						<td>
+							The chips in your action pile will have a blue background when selected.<br>
+							They can be selected by: <br><br>
+							Making a choice (grow/destroy) <br>
+							Clicking on a chip in one of your action piles
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Growing plants" src="images/growingplants.png" height=150px width=175px>
+						</td>
+						<td>
+							You can plant your Veggies on any open square OR any square with only ONE of your own Veggies planted on it.<br><br>
+							The longer the Veggie is planted, the more Veggies it will produce, as long as it is planted alone. <br>
+							This is represented by the number shown on top of the Veggie on the board.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="AI chips" src="images/aichips.png" height=150px width=175px>
+						</td>
+						<td>
+							The AI player's plants will have a yellow background when planted in the optimal soil. <br><br>
+							A red bar on the bottom of the plant means it was planted in the wrong soil, and will count negatively against the AI's score as it grows.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Human chips" src="images/humanchips.png" height=150px width=175px>
+						</td>
+						<td>
+							Your Veggies will have a light blue background when planted in the optimal soil. <br><br>
+							A red bar on the bottom of the plant means it was planted in the wrong soil, and will count negatively against your score as it grows.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Scoring" src="images/scoring.png" height=150px width=175px>
+						</td>
+						<td>
+							Your current score is shown at the bottom of the screen, while the AI player's score is shown at the top of the screen.<br>
+							Scoring =<br>
+							+1 per plant planted alone on correct soil (if multiple types of plants are on the soil, the largest number is used)<br>
+							-1 per plant planted on wrong soil
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img alt="Message Center" src="images/msgcenter.png" height=150px width=175px>
+						</td>
+						<td>
+							As a reminder, the message center on the bottom right of the screen will remind you where to plant your veggies to optimize their growth.<br><br>
+							This can be turned on/off by player, along with the level of difficulty of the game.
+						</td>
+					</tr>
+				</table>
+		    	</div>
+		    <h3><a href="#">Game Design Document</a></h3>
+			<div><strong>1) Design History</strong><br><br>
+				<table summary="History" border=1>
+					<tr>
+						<td width="150px"><b>Date</b></td><td width="200px"><b>Author</b></td><td><b>Details of Change</b></td>
+					</tr>
+					<tr>
+						<td>November 8, 2011</td><td>Christine Talbot</td><td>Initial Creation</td>
+					</tr>
+					<tr>
+						<td>November 12, 2011</td><td>Christine Talbot</td><td>Cleaned up Instructions section and added details into Vision Statement, Characters, Story, World</td>
+					</tr>
+					<tr>
+						<td>November 16, 2011</td><td>Eric Faust</td><td>Editted GDD content. Fixed broken image links. Updated Media section.</td>
+					</tr>
+					<tr>
+						<td>December 9, 2011</td><td>Eric Faust</td><td>Editted GDD content to reflect real time game pace. Added Playtest Section as well as placeholder sections for
+												Technical Document, Demo Video, and Project Milestones.</td>
+					</tr>
+					<tr>
+						<td>December 14, 2011</td><td>Todd Dobbs</td><td>Added google docs link to playtest form.</td>
+					</tr>		
+					<tr>
+						<td>December 14, 2011</td><td>Christine Talbot</td><td>Updated Instructions page and updated original design doc to better align with current state of the game.</td>
+					</tr>			
+				</table>
+<br>
+<br>
+<strong>2) Vision Statement</strong><br>
+<br>
+To provide a multi-player educational game about planting and vegetables.<br>
+<br>
+Veggie Harvest is essetially a real time strategy game where the player's goal is to grow more<br>
+Veggies than the computer controlled opponent. While the game will incoporate some real world<br>
+farming techniques, such as which type of soil is most effective for specific kinds of vegetables,<br>
+Veggie Harvest features a cartoony style in order to make the game more kid-friendly and to<br>
+increase player investment in the Veggies that they are growing. <br>
+<br>
+<br>
+<strong>3) Audience / Platform</strong><br>
+<br>
+Looking to be rated Everyone (on the ESRB scale) in order to make it accessible for a Discovery Place kiosk or exhibit.<br>
+Veggie Harvest will be built in Unity3D and deployed with the web plugin for Unity, non-professional version. <br>
+<br>
+<br>
+<strong>4) Legal Analysis</strong><br>
+<br>
+This game will be developed in an open-source manner. All assets will be royalty-free, open-source resources.<br>
+Veggie Harvest is intended as a teaching assignment for the students making it, it is not intended for commercial use.<br> This game's intellectual property will be owned by the University of North Carolina - Charlotte.<br>
+<br>
+<strong>5) Characters</strong><br>
+<br>
+<u>Players</u><br>
+There will be one human player playing against an AI opponent (also referred to as a player). 
+The player will use either a mouse or a controller button to select items on the screen, such as:<br>
+<ul>
+	<li>Individual drawn Veggies</li>
+	<li>Individual drawn Disasters</li>
+	<li>Soil squares on the board (when planting)</li>
+	<li>Individual Veggies on the board (when using a Disaster)</li>
+</ul><br>
+Players will select an item, then select where to put it for items that can be moved, such as:
+<ul>
+	<li>Individual drawn Veggies</li>
+	<li>Individual drawn Disasters</li>
+</ul><br>
+Moving the mouse or using the controller joystick will allow the player to move the cursor on the screen.
+<br><br>
+Each player will be assigned a color for their Veggies, Yellow for the AI and Blue for the human player. 
+<br>
+<br>
+<u>AI Characters</u><br>
+<br>
+There will be a single AI character playing against the human. The AI will show its moves just as the human player's moves are shown. 
+Players are given choices based on a background timer. This timer will be affected by the Difficulty slider in the Configuration screen. The timer will be faster at higher difficulties. 
+The timer returns a random value between 1 and 3. The occurance of this background timer triggering will be referred to as giving choices to the players.
+The AI player will follow simple rules for their behavior, such as:<br>
+<ul>
+	<li>After specified delay (based on difficulty level), make all choices that are available to the AI player.</li>
+		<ul>
+			<li>For up to 4 veggies available within action slots and the board for the AI, will always choose to grow for a choice</li>
+			<li>After 4 veggies are available, AI will choose to grow in most cases, but becomes more likely to destroy as the number of grow cards in the action slots increases.</li>
+		</ul>
+	<li>After making all choices that are available, the AI player will choose one card to play.</li>
+		<ul>
+			<li>If have a Disaster card, will play it first, if possible.</li>
+			<li>If the Disaster card cannot be played, will grow a plant, if available.</li>
+			<li>If no Disasters are available to be played, will grow a plant, if available.</li>
+		</ul>
+	<li>Decisions for where to grow or destroy will follow these rules:</li>
+		<ul>
+			<li>If choose a Disaster, will destroy own Veggies that are doubled up on their square first.</li>
+			<li>If choose a Disaster, will destroy own Veggies that are misplanted on the wrong soil second.</li>
+			<li>If choose a Disaster, will destroy random player's Veggies which have exactly the number of Veggies as the card drawn states, third.</li>
+			<li>If choose a Veggie, will plant in first empty square with the correct soil, if available.</li>
+			<li>If choose a Veggie, will plant in first square with the correct soil AND one of its own Veggies on that square, second.</li>
+			<li>If choose a Veggie, will plant in random square which has one of its own Veggies on that square, third.</li>
+			<li>If choose a Veggie, will plant in random empty square on the board, fourth.</li>
+		</ul>
+</ul>
+These behaviors will be followed with a higher probability when the Difficulty is set higher (10% max randomness) than when it is set lower (90% max randomness).  Also, the AI player will play slower 
+when the difficulty is set lower than when it is set higher (10 seconds to 1 second range).
+<br>
+<br>
+<u>General Requirements of Play</u><br>
+<br>
+The current scores for each player will update at a regular interval in their respective sides of the board.  
+As each Veggie is played, an animation of the growth will be played. All selections on the board will provide appropriate sound feedback including button clicks and error sounds. 
+Action items that are selected on the player's side will be highlighted with a medium blue to show that it is selected. 
+The message center will display hints on where best to plant the veggie or how to use the Disaster card.
+<br>
+The background variable timer will have the following effects on the players' choices:<br>
+<ul>
+	
+	<li>1 - Choose one Card (A new choice is presented)</li>
+	<li>2 - Choose two Cards (Two new choices are presented)</li>
+	<li>3 - Choose three Cards (Three new choices are presented)</li>
+</ul><br>
+
+
+At regular intervals, one new Veggie (of the same type) will be grown in each square that has Veggies on it EXCEPT 
+the squares where there are more than one Veggie set on it. That is to say, the count of a Veggie on each square will
+go up by one regularly unless the sqare has more than one Veggie on it.
+<br>
+Players can adjust the difficulty of play or whether hints are on/off while playing the game to increase or decrease the difficulty of the game real-time.
+<br>
+The game will end when all the board squares have at least one Veggie. On end game, a You Win! screen or a You Lost! screen will be 
+shown to the player, based on their score, along with appropriate sound effects.
+They will be offered an opportunity to play again.<br>
+<br>
+
+<br>
+<strong>6) Story</strong><br>
+<br>
+<table summary="About Veggie Harvest">
+			<tr>
+				<td colspan="3">
+					Veggie Harvest is a game that simulates the 
+					lifecycle of plants.  Their growth in different preferred 
+					soils, as well as their death due to bugs, overwatering, 
+					and droughts mimic real-life issues that farmers and home 
+					gardeners encounter.
+				</td>
+				<td width="250">
+
+					<img src="images/garden.jpg" alt="Home Garden" width="200px" height="200px"/>
+				</td>
+			</tr>
+			<tr><td colspan="3">&nbsp;</td></tr>
+			<tr>
+				<td width="250" align="center">
+					<img src="images/allveggiechips.png" border="1" alt="Plant Examples" width="150px" height="150px" />
+				</td>
+				<td colspan="3">
+
+					Just as in real-life, the different Veggies prefer 
+					different types of soils, with Volcanic Soil being the 
+					most fertile soil for most plant types.  You'll find that 
+					blueberries, watermelons, and pumpkins will prefer a Sandy 
+					Soil for its drainage properties.  Potatoes, carrots, and 
+					beets prefer loamy-type soils (Top Soil), while cucumbers, broccoli, 
+					and cabbages like the Hard Clay Soils.  Also, growing too 
+					many Veggies too close together can actually stunt the 
+					growth of those Veggies.
+				</td>
+			</tr>
+			<tr><td colspan="3">&nbsp;</td></tr>
+			<tr>
+				<td colspan="3">
+					We took these concepts and translated them into a game for 
+					one player versus the computer.  The board consists of a 3x6 grid with 6 
+					squares being Top Soil (most common soil), 5 squares being 
+					Sandy Soil, 5 squares being Hard Clay Soil, and only 2 
+					squares as Volcanic Soil.  
+				</td>
+				<td width="250">
+					<img src="images/Board.png" alt="Veggie Harvest Game" width="250px" height="150px" />
+
+				</td>
+			</tr>
+			<tr><td colspan="3">&nbsp;</td></tr>
+			<tr>
+				<td width="250">
+					<img src="images/humanchips.png" alt="Potato" width="200px" height="150px" />
+				</td>
+				<td colspan="3">
+					The player is given one color (light blue) to represent the Veggies they have 
+					grown.   Veggies and Disasters enable planting the different Veggies
+					 and killing the Veggies in different ways. 
+				</td>
+
+			</tr>
+			<tr><td colspan="3">&nbsp;</td></tr>
+			<tr>
+				<td colspan="3">
+					At regular intervals, any of Veggies on the board will
+					grow another Veggie.  Players will be given the opportunity to plant new Veggie(s), and possibly 
+					destroy Veggies on the board. When the last plot of soil 
+					is filled, the game is over.  The player (human or AI) with the most 
+					Veggies on the board wins. 
+				</td>
+				<td width="250" align="center">
+					<img src="images/growingplants.png" alt="Chips" width="150px" height="150px" />
+				</td>
+
+			</tr>
+				
+		</table><br>
+<br>
+<strong>7) World</strong><br>
+<br>
+The world will consist of the game board in the center of the screen. The human player's cards and score will be below the 
+board on the bottom of the screen. The score of the AI opponent will be above the game 
+board, along with the AI player's cards. <br>
+<br>
+The game board will be viewed from the top-down perspective. It will consist of a
+3x6 grid of 18 squares.  These squares will consist of 6 topsoil, 5 clay, 5 sand, 2 volcanic.
+Each square will have a relevant graphic for the type of soil it represents. On each square
+will be shown the growing animations (when appropriate per the game), as well as
+what Veggie(s) are planted there.  Each Veggie will have a different colored background to represent
+which player planted it and whether it was planted in the proper soil.<br>
+<br>
+Items on the screen are highlighted (if selectable in the current state) based on the movement of the
+mouse or joystick by the player that is currently performing their turn.  Examples of highlightable items based on current state include:<br>
+<ul>
+	<li>If nothing selected but cards are available to play, only the cards at the bottom of the screen will be selectable.</li>
+	<li>If you have something selected (Veggie), then you can only select squares on the board if it is a Veggie.</li>
+	<li>If you have something selected (Disaster), then you can only select Veggies on the board that can be targeted by a Disaster.</li>
+</ul><br>
+
+On the bottom right, there will be a message prompt that will tell the player how to best play their cards, such as:<br>
+<ul>
+	<li>Tomatoes get planted on Volcanic soil</li>
+	<li>Disaster of 4 can destroy up to 4 Veggies on the board</li>
+
+</ul><br>
+
+Play is completely real-time, but the AI player's decision making will be slowed down to enable the human players to see what is being done during the AI
+player's moves.<br>
+<br>
+<br>
+<strong>8) Media List</strong><br>
+<br><strong>Fonts</strong>
+<ul>
+	<li>Cascade</li>
+	<li>AlphaGarden</li>
+</ul>
+<br><strong>Images</strong>
+<ul>
+	<li>1.png</li>
+	<li>2.png</li>
+	<li>3.png</li>
+	<li>4.png</li>
+	<li>5.png</li>
+	<li>6.png</li>
+	<li>AI_transparency_layer.jpg</li>
+	<li>Board-old.png</li>
+	<li>Board.png</li>
+	<li>aichips.png</li>
+	<li>alldestroychips.png</li>
+	<li>allveggiechips.png</li>
+	<li>arrow.png</li>
+	<li>beet-growing4.png</li>
+	<li>beet-growing5.png</li>
+	<li>beet_ai.png</li>
+	<li>beet_ai_wrong.png</li>
+	<li>beet_chip.jpg</li>
+	<li>beet_human.png</li>
+	<li>beet_human_wrong.png</li>
+	<li>beet_selected.png</li>
+	<li>beets_ss.jpg</li>
+	<li>blueberries-growing4.png</li>
+	<li>blueberries-growing5.png</li>
+	<li>blueberries_ai.png</li>
+	<li>blueberries_ai_wrong.png</li>
+	<li>blueberries_chip.jpg</li>
+	<li>blueberries_human.png</li>
+	<li>blueberries_human_wrong.png</li>
+	<li>blueberries_selected.png</li>
+	<li>blueberries_ss.jpg</li>
+	<li>broccoli-growing4.png</li>
+	<li>broccoli-growing5.png</li>
+	<li>broccoli_ai.png</li>
+	<li>broccoli_ai_wrong.png</li>
+	<li>broccoli_chip.jpg</li>
+	<li>broccoli_human.png</li>
+	<li>broccoli_human_wrong.png</li>
+	<li>broccoli_selected.png</li>
+	<li>broccoli_ss.jpg</li>
+	<li>cabbage-growing4.png</li>
+	<li>cabbage-growing5.png</li>
+	<li>cabbage_ai.png</li>
+	<li>cabbage_ai_wrong.png</li>
+	<li>cabbage_chip.jpg</li>
+	<li>cabbage_human.png</li>
+	<li>cabbage_human_wrong.png</li>
+	<li>cabbage_selected.png</li>
+	<li>cabbages_ss.jpg</li>
+	<li>carrot-growing4.png</li>
+	<li>carrot-growing5.png</li>
+	<li>carrot_ai.png</li>
+	<li>carrot_ai_wrong.png</li>
+	<li>carrot_chip.jpg</li>
+	<li>carrot_human.png</li>
+	<li>carrot_human_wrong.png</li>
+	<li>carrot_selected.png</li>
+	<li>carrots_ss.jpg</li>
+	<li>choices.PNG</li>
+	<li>choices1.PNG</li>
+	<li>clay.png</li>
+	<li>cucumber-growing4.png</li>
+	<li>cucumber-growing5.png</li>
+	<li>cucumber_ai.png</li>
+	<li>cucumber_ai_wrong.png</li>
+	<li>cucumber_chip.jpg</li>
+	<li>cucumber_human.png</li>
+	<li>cucumber_human_wrong.png</li>
+	<li>cucumber_selected.png</li>
+	<li>cucumbers_ss.jpg</li>
+	<li>destroy1.jpg</li>
+	<li>destroy1_selected.png</li>
+	<li>destroy2.jpg</li>
+	<li>destroy2_selected.png</li>
+	<li>destroy3.jpg</li>
+	<li>destroy3_selected.png</li>
+	<li>destroy4.jpg</li>
+	<li>destroy4_selected.png</li>
+	<li>destroy5.jpg</li>
+	<li>destroy5_selected.png</li>
+	<li>destroy6.jpg</li>
+	<li>destroy6_selected.png</li>
+	<li>dying1.jpg</li>
+	<li>dying2.jpg</li>
+	<li>dying3.jpg</li>
+	<li>dying4.jpg</li>
+	<li>growing1.png</li>
+	<li>growing2.png</li>
+	<li>growing3.png</li>
+	<li>growing3.png.orig</li>
+	<li>growing4.png</li>
+	<li>growingplants.png</li>
+	<li>human_transparency_layer.jpg</li>
+	<li>humanchips.png</li>
+	<li>msgcenter.png</li>
+	<li>planted1.jpg</li>
+	<li>planted2.jpg</li>
+	<li>planted3.jpg</li>
+	<li>planted4.jpg</li>
+	<li>potato-growing4.png</li>
+	<li>potato-growing5.png</li>
+	<li>potato_ai.png</li>
+	<li>potato_ai_wrong.png</li>
+	<li>potato_chip.jpg</li>
+	<li>potato_human.png</li>
+	<li>potato_human_wrong.png</li>
+	<li>potato_selected.png</li>
+	<li>potato_ss.jpg</li>
+	<li>pumpkin-growing4.png</li>
+	<li>pumpkin-growing5.png</li>
+	<li>pumpkin_ai.png</li>
+	<li>pumpkin_ai_wrong.png</li>
+	<li>pumpkin_chip.jpg</li>
+	<li>pumpkin_human.png</li>
+	<li>pumpkin_human_wrong.png</li>
+	<li>pumpkin_selected.png</li>
+	<li>pumpkins_ss.jpg</li>
+	<li>sand.png</li>
+	<li>scoring.png</li>
+	<li>selected_transparency_layer.jpg</li>
+	<li>selectedchips.png</li>
+	<li>tomato-growing4.png</li>
+	<li>tomato-growing5.png</li>
+	<li>tomato_ai.png</li>
+	<li>tomato_ai_wrong.png</li>
+	<li>tomato_chip.jpg</li>
+	<li>tomato_human.png</li>
+	<li>tomato_human_wrong.png</li>
+	<li>tomato_selected.png</li>
+	<li>tomatoes_ss.jpg</li>
+	<li>topsoil.png</li>
+	<li>volcano.png</li>
+	<li>watermelon-growing4.png</li>
+	<li>watermelon-growing5.png</li>
+	<li>watermelon_ai.png</li>
+	<li>watermelon_ai_wrong.png</li>
+	<li>watermelon_chip.jpg</li>
+	<li>watermelon_human.png</li>
+	<li>watermelon_human_wrong.png</li>
+	<li>watermelon_selected.png</li>
+	<li>watermelon_ss.jpg</li>
+	<li>white_texture.png</li>
+	<li>white_texture.png.orig</li>
+	</ul>
+<strong>Textures</strong>
+<ul>
+	<li>Blue.png</li>
+	<li>Board.png</li>
+	<li>CardSpace.png</li>
+	<li>Controls.png</li>
+	<li>Destroy.png</li>
+	<li>DestroyButton.png</li>
+	<li>Grass (Hill).jpg</li>
+	<li>Green.png</li>
+	<li>Grow.png</li>
+	<li>GrowButton.png</li>
+	<li>New Board 2.png</li>
+	<li>New Board.png</li>
+	<li>Red.png</li>
+	<li>UNCCLogo.png</li>
+	<li>Wood.png</li>
+	<li>Yellow.png</li>
+	<li>configuration.png</li>
+	<li>credits.png</li>
+	<li>gameover.png</li>
+	<li>instructions.png</li>
+	<li>moss.png</li>
+	<li>stem_blueberry.jpg</li>
+	<li>stem_cabbage.jpg</li>
+	<li>stem_pumpkin.jpg</li>
+	<li>stem_tomato.jpg</li>
+	<li>veggieharvest.png</li>
+
+</ul>
+<strong> Sounds </strong>
+<ul>
+	<li>applause.wav</li>
+	<li>applause_cheers.wav</li>
+	<li>boing2.wav</li>
+	<li>boo.wav</li>
+	<li>smooth_button_click11.wav</li>
+	<li>background3.wav</li>
+</ul>
+<br>
+<br>
+			</div>
+			<h3><a href="#">Playtest Feedback</a></h3>
+			<div>
+				<strong>1) Board Game Reviews</strong>
+				<br>
+					<ul><a href="boardgame_playtesting.html">Link to Board Game Playtest Notes</a></ul>
+				<strong>2) Video Game Reviews</strong>
+				<br>
+					<ul><a href="https://docs.google.com/spreadsheet/embeddedform?formkey=dG16QnVxVDhkVWpTX3FZUm0xWEg3eHc6MQ">Link to the Playtest Form</a></ul>
+					13 Playtesters were sampled during our Video Game play test session. Players were allowed to play the game for 5 minutes. Then asked to complete
+					the playtest form (linked above).
+				<br><br>
+					a.	Objective Data Summary: <br>
+					<ul>
+						<li>Most players did not choose to read the game instructions before starting to play. </li>
+						<li>Players never played for more than 5 minutes. This was primarily due to time constraints with the playtest session. </li>
+						<li>Most players said that they did not win their game. This reflects the game's scoring system being bugged. </li>
+						<li>Most players were willing to play the game again if given the opportunity. </li>
+					</ul>
+					b. 	Subjective Data Summary:  <br>
+					<ul>
+						<img src="images/playtest-enjoyment.jpg" alt="Chips" width="600px" height="400px" />
+						<li>The average of "How much did you enjoy the game" was 6.0, the variance was 2.00 </li>
+						<br>-------------------------------------------------------------------------------------
+
+						<img src="images/playtest-learning.jpg" alt="Chips" width="600px" height="400px" />
+						<li>The average of "How easy was it to learn the game" was 7.4, the variance was 8.59 </li>
+						<br>-------------------------------------------------------------------------------------
+
+						<img src="images/playtest-presentation.jpg" alt="Chips" width="600px" height="400px" />
+						<li>The average of "How would you rate the presentation" was 7.3, the variance was 2.56 </li>
+						<br>-------------------------------------------------------------------------------------
+
+						<img src="images/playtest-challenge.jpg" alt="Chips" width="600px" height="400px" />
+						<li>The average of "How challenging was the game" was 5.3, the variance was 5.59 </li>
+					</ul>
+					c.	Short Answer Summary:  <br>
+					<ul>
+						<li>Seven out of ten play testers experienced confusion about something during gameplay. </li>
+						<li>Overall, play testers said they were not frustrated by the game, though three said they would have liked higher game speed. </li>
+						<li>Perhaps due to their limited time with the game there were a number of uncertain responses to whether the game required strategy. 
+						    On the whole, most play testers did feel the game required strategy. </li>
+						<li>The most common responses to what the play testers enjoyed the most about the game was having the plants grow or destroying them. </li>
+						<li>The most common respsonse to what the play testers didn't enjoy about the game was losing (not knowing why their scores were so low) and the game speed. </li>
+						<li>The most common play tester suggestions were to improve the coloring and to increase the game speed. </li>
+					</ul>
+				<br>
+				<strong>Analysis of Data</strong>
+				<br>
+					Most of the play testers seemed to moderately enjoy playing the game. The vast majority of players said that they would wish to continue playing or would like to play 
+					again.
+				<br>
+				<br>
+					Several play testers mentioned that they felt the game needed to play faster. For example, be able to 
+					have more cards on their side to choice from or to respawn their choices faster. It was also mentioned that the plants grew at a pace they felt was too fast. To fix this
+					we plan to adjust the timers controlling the grow cycle and the player draws. 
+				<br>
+				<br>
+					A common problem play testers experienced was periods of confusion about their standing in the game state. That is to say, they did not have a good sense of whether they
+					were winning or losing, how much they were winning or losing by, or how they were performing from a "I'm playing this game right" perspective. To fix this issue we plan
+					to increase the visibility of the player scores, to more intuitively display the board state (using colors for who controls various plants), to decrease the growth rate
+					of plants to allow the player time to internally calculate the game state, and to increase the rate at which the player gets to play cards to minimize their down-time.
+				<br>
+				<br>
+					Another piece of feedback was to clarify (ie. give some sort of feedback) whether the player had a Veggie or Destroy card in their hand selected or not. To fix this issue
+					we will highlight the card a player has selected to let them know what card in their hand is "active". 
+				<br>
+			</div>
+
+
+			<h3><a href="#">Report Document</a></h3>
+			<div><strong>Report Document </strong><br>
+				<br>
+				<a href="VeggieHarvest-Report-iGDD-Fall-2011.html">VeggieHarvest-Report-iGDD-Fall-2011.html</a><br>
+				<br>
+				
+			</div>
+			<h3><a href="#">Technical Document</a></h3>
+			<div><strong>Technical Document </strong><br>
+				<br>
+				<a href="VeggieHarvest-Tech-iGDD-Fall-2011.html">VeggieHarvest-Tech-iGDD-Fall-2011.html</a><br>
+				<br>
+				
+			</div>
+			<h3><a href="#">Source Code</a></h3>
+			<div><strong>Source Code</strong><br>
+				<br>
+				<a href="VeggieHarvest-Source-iGDD-Fall-2011.zip">VeggieHarvest-Source-iGDD-Fall-2011.zip</a><br>
+				<br>
+				
+			</div>
+			<h3><a href="#">Demo Video</a></h3>
+			<div><strong>Demo Video </strong><br>
+				<br><a href="VeggieHarvest_video.mov">Link to Demo Video</a><br><br>
+			</div>
+			<h3><a href="#">Presentation</a></h3>
+			<div><strong>Presentation</strong><br>
+				<br>
+				<a href="VeggieHarvest_Presentation.ppt">VeggieHarvest_Presentation.ppt</a><br>
+				<br>
+				
+			</div>
+
+			<h3><a href="#">Project Milestones</a></h3>
+			<div><strong>Project Milestones </strong><br>
+				<br><a href="VeggieHarvest-Milestones-iGDD-Fall-2011.html">VeggieHarvest-Milestones-iGDD-Fall-2011.html</a>
+				<br>
+				Physical project plan document with Gantt charts: <a href="Project Plan/Veggie Harvest Project Plan.mpp">Veggie Harvest Project Plan.mpp</a>
+				<br>
+			</div>
+			
+			<h3><a href="#">Individual Contributions</a></h3>
+			<div><strong>Individual Contributions</strong><br>
+				<br><a href="Joseph-Blair.pdf">Joseph Blair</a>
+				<br><a href="Todd-Dobbs.pdf">Todd Dobbs</a>
+				<br><a href="Eric-Faust.pdf">Eric Faust</a>
+				<br><a href="Christine-Talbot.pdf">Christine Talbot</a>
+				
+				<br>
+			</div>
+
+			<h3><a href="#">Credits</a></h3>
+			<div><strong>Executive Producer:</strong> G. Michael Youngblood, Ph.D.<br>
+				 <strong>Director:</strong>Christine Talbot<br>
+				 <strong>Producer:</strong> Joseph Blair<br>
+				 <strong>Lead Game Developer:</strong> Todd Dobbs<br>
+				 <strong>Lead Media Developer:</strong> Eric Faust<br>
+				 <br>
+				 <u><strong>Development Team:</strong></u><br>
+				 Joseph Blair<br>
+				 Todd Dobbs<br>
+				 Eric Faust<br>
+				 Christine Talbot<br> 
+				 <br>
+				 <u><strong>Tools:</strong></u><br>
+				 Unity Engine<br>
+				 jQuery<br>
+				 GIMP<br>
+				 mp3mymp3<br>
+				 Photoshop<br>
+				 Camtasia<br>
+				 <br>
+				 <u><strong>Other Credits:</strong></u><br>
+				 Webpage layout based on <a href="http://gig.uncc.edu/games/Modabu2Web/index.html">Modabu Game Page</a><br>
+				 Cascade Font from <a href="http://www.fontspace.com/download/9464/953156cba4bd4702be0fb4fd7f2aa04e/danny-amor_cascade.zip">here</a>.<br>
+				 AlphaGarden Font from <a href="http://www.fonts2u.com/download/alphagarden.font">here</a>.<br>
+				 Volcanic image from <a href="http://planetsave.com/files/2010/06/2044855541_043e5777e2_o.jpg">here</a>.<br>
+				 Background music from <a href="http://www.soundsleeping.com/">here</a>.<br>
+				 Veggie &amp; Disaster images from  Microsoft Office ClipArt.<br>
+				 Scrolling credits screen sample code from <a href="http://answers.unity3d.com/questions/43490/scroll-intro-text.html">here</a>.<br>
+				 Images for growing plant animations based on images from <a href="http://tsgk.captainn.net/index.php?p=search&q=plant">here</a>.<br>
+				 
+			</div>
+
+					
+		</div>
+		</center>
+	</body>
+</html>

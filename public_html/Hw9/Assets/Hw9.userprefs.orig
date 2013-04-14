@@ -1,0 +1,23 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+<<<<<<< local
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Configuration.cs">
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreditsScreenScroller.js">
+>>>>>>> other
+    <Files>
+<<<<<<< local
+      <File FileName="Assets/Scripts/Configuration.cs" Line="103" Column="57" />
+=======
+      <File FileName="Assets/Scripts/CreditsScreenScroller.js" Line="24" Column="13" />
+      <File FileName="Assets/Scripts/ConfigButton.js" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CreditsButton.js" Line="21" Column="26" />
+      <File FileName="Assets/Scripts/ReturnToMenuScript.js" Line="4" Column="4" />
+>>>>>>> other
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
